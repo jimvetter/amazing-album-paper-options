@@ -1,0 +1,522 @@
+<!--
+META
+Project: Amazing Italian Album Options (Notion)
+Chat: Create embeddable web page for Paper Options & Printing section
+Date: 2025-08-23
+Owner: Jim Vetter
+Purpose: Single-file, responsive, Notion-embed-friendly HTML page that presents the provided list of paper/print options in an elegant grid.
+
+Change Log
+- 2025-08-23: Initial version created.
+-->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Paper Options & Printing</title>
+  <meta name="description" content="HD & photographic print paper options presented in a clean, responsive grid." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans&family=Cardo&display=swap" rel="stylesheet">
+  <style>
+    /* ----- CSS Reset (lightweight) ----- */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
+    /* ----- Page ----- */
+    :root {
+      --bg: #ffffff;
+      --fg: #0f172a; /* slate-900 */
+      --muted: #475569; /* slate-600 */
+      --card: #ffffff;
+      --border: #e2e8f0; /* slate-200 */
+      --shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-hover: 0 10px 15px rgba(15, 23, 42, 0.10), 0 4px 6px rgba(15, 23, 42, 0.05);
+      --radius: 16px;
+      --accent: #0ea5e9; /* sky-500 */
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b0f1a;
+        --fg: #e2e8f0;
+        --muted: #94a3b8;
+        --card: #0f172a;
+        --border: #1f2937;
+        --shadow: none;
+        --shadow-hover: none;
+        --accent: #38bdf8;
+      }
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(16px, 3vw, 32px);
+    }
+
+    h1, h2 { 
+      line-height: 1.2; 
+      margin: 0 0 16px; 
+      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+      font-weight: 600;
+    }
+
+    /* Compact header / subtle divider for Notion embed */
+    header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+    }
+    header h2 { 
+      letter-spacing: 0.06em; 
+      font-weight: 700; 
+      font-size: clamp(18px, 3.2vw, 28px);
+      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+    }
+    header .sub { 
+      color: var(--muted); 
+      font-size: 0.95rem; 
+      font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    }
+
+    /* Grid list styling for provided markup */
+    #paperprinting ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: clamp(12px, 2vw, 20px);
+    }
+
+    /* Responsive columns: 1 on narrow, up to 3 on wide Notion embeds */
+    @media (max-width: 599px) {
+      #paperprinting li { grid-column: span 12; }
+    }
+    @media (min-width: 600px) and (max-width: 999px) {
+      #paperprinting li { grid-column: span 6; } /* 2-up */
+    }
+    @media (min-width: 1000px) {
+      #paperprinting li { grid-column: span 4; } /* 3-up */
+    }
+
+    #paperprinting li {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    #paperprinting li:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(14,165,233,0.35); /* accent tint */
+    }
+
+    /* Image as a fixed aspect ratio for clean rows */
+    #paperprinting img {
+      width: 100%;
+      height: auto;
+      display: block;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+    }
+
+    /* Caption */
+    #paperprinting span {
+      display: block;
+      padding: 14px 14px 16px;
+      font-weight: 600;
+      letter-spacing: .02em;
+      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+    }
+    #paperprinting span br { display: none; }
+
+    /* Multi-line caption styling */
+    #paperprinting span::first-line { color: var(--fg); font-size: 1.05rem; }
+    #paperprinting span { color: var(--muted); }
+
+    /* Make it look nice inside tight iframes */
+    #paperprinting { margin: 0; }
+
+    /* Small helper footnote (optional) */
+    .fineprint { 
+      color: var(--muted); 
+      font-size: 0.85rem; 
+      margin-top: 18px; 
+      font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    }
+      /* Lightbox (click-to-zoom) */
+    .lightbox-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.75); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 24px; }
+    .lightbox-backdrop.show { display: flex; }
+    .lightbox { max-width: 96vw; max-height: 92vh; background: var(--card); border-radius: 14px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-hover); position: relative; }
+    .lightbox figure { margin: 0; }
+    .lightbox img { display: block; max-width: 96vw; max-height: 72vh; width: auto; height: auto; object-fit: contain; background: #000; }
+    .lightbox figcaption { 
+      padding: 12px 16px; 
+      font-weight: 600; 
+      letter-spacing: .02em; 
+      color: var(--fg); 
+      background: var(--card); 
+      border-top: 1px solid var(--border);
+      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+    }
+    .lb-btn { position: absolute; top: 10px; line-height: 1; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border); background: rgba(17,24,39,.7); color: #fff; cursor: pointer; user-select: none; }
+    .lb-btn:hover { background: rgba(17,24,39,.9); }
+    .lb-close { right: 10px; font-size: 22px; }
+    .lb-prev, .lb-next { top: 50%; transform: translateY(-50%); font-size: 26px; padding: 10px 14px; background: rgba(17,24,39,.6); }
+    .lb-prev { left: 10px; }
+    .lb-next { right: 10px; }
+    @media (pointer: coarse) { .lb-prev, .lb-next { font-size: 30px; padding: 14px 18px; } }
+      /* Lightbox (click-to-zoom) */
+    .lightbox-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.75); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 24px; }
+    .lightbox-backdrop.show { display: flex; }
+    .lightbox { max-width: 96vw; max-height: 92vh; background: var(--card); border-radius: 14px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-hover); position: relative; }
+    .lightbox figure { margin: 0; }
+    .lightbox img { display: block; max-width: 96vw; max-height: 72vh; width: auto; height: auto; object-fit: contain; background: #000; }
+    .lightbox figcaption { 
+      padding: 12px 16px; 
+      font-weight: 600; 
+      letter-spacing: .02em; 
+      color: var(--fg); 
+      background: var(--card); 
+      border-top: 1px solid var(--border);
+      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+    }
+    .lb-btn { position: absolute; top: 10px; line-height: 1; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border); background: rgba(17,24,39,.7); color: #fff; cursor: pointer; user-select: none; }
+    .lb-btn:hover { background: rgba(17,24,39,.9); }
+    .lb-close { right: 10px; font-size: 22px; }
+    .lb-prev, .lb-next { top: 50%; transform: translateY(-50%); font-size: 26px; padding: 10px 14px; background: rgba(17,24,39,.6); }
+    .lb-prev { left: 10px; }
+    .lb-next { right: 10px; }
+    @media (pointer: coarse) { .lb-prev, .lb-next { font-size: 30px; padding: 14px 18px; } }
+      /* Lightbox (click-to-zoom) */
+    .lightbox-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.75); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 24px; }
+    .lightbox-backdrop.show { display: flex; }
+    .lightbox { max-width: 96vw; max-height: 92vh; background: var(--card); border-radius: 14px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-hover); position: relative; }
+    .lightbox figure { margin: 0; }
+    .lightbox img { display: block; max-width: 96vw; max-height: 72vh; width: auto; height: auto; object-fit: contain; background: #000; }
+    .lightbox figcaption { 
+      padding: 12px 16px; 
+      font-weight: 600; 
+      letter-spacing: .02em; 
+      color: var(--fg); 
+      background: var(--card); 
+      border-top: 1px solid var(--border);
+      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+    }
+    .lb-btn { position: absolute; top: 10px; line-height: 1; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border); background: rgba(17,24,39,.7); color: #fff; cursor: pointer; user-select: none; }
+    .lb-btn:hover { background: rgba(17,24,39,.9); }
+    .lb-close { right: 10px; font-size: 22px; }
+    .lb-prev, .lb-next { top: 50%; transform: translateY(-50%); font-size: 26px; padding: 10px 14px; background: rgba(17,24,39,.6); }
+    .lb-prev { left: 10px; }
+    .lb-next { right: 10px; }
+    @media (pointer: coarse) { .lb-prev, .lb-next { font-size: 30px; padding: 14px 18px; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h2>PAPER OPTIONS &amp; PRINTING</h2>
+      <div class="sub">HD ink‑jet • Photographic silver halide • Offset digital</div>
+    </header>
+
+    <!-- Paper Options and Printing Section (provided HTML, preserved IDs/structure) -->
+    <div id="paperprinting" aria-labelledby="paperprinting-heading">
+      <ul>
+        <li>
+          <img loading="lazy" src="https://www.graphistudio.com/wp-content/uploads/2023/03/canon_HD_lustre1500-2.jpg" alt="HD Print Ink-jet Lustre Paper" />
+          <span>HD PRINT<br>Ink-jet technology<br>Lustre Paper</span>
+        </li>
+        <li>
+          <img loading="lazy" src="https://www.graphistudio.com/wp-content/uploads/2023/03/canon_HD_glossy1500-1.jpg" alt="HD Print Ink-jet Glossy paper" />
+          <span>HD PRINT<br>Ink-jet technology<br>Glossy paper</span>
+        </li>
+        <li>
+          <img loading="lazy" src="https://www.graphistudio.com/wp-content/uploads/2023/03/canon_HD_deep_matte_touch1500.jpg" alt="HD Print Ink-jet Deep Matte Touch HD" />
+          <span>HD PRINT<br>Ink-jet technology<br>Deep Matte Touch HD</span>
+        </li>
+        <li>
+          <img loading="lazy" src="https://www.graphistudio.com/wp-content/uploads/2023/03/silver_halide_lustre-scaled.jpg" alt="Photographic Print Silver Halide Lustre Paper" />
+          <span>PHOTOGRAPHIC PRINT<br>Silver Halide Technology<br>Lustre Paper</span>
+        </li>
+        <li>
+          <img loading="lazy" src="https://www.graphistudio.com/wp-content/uploads/2023/03/silver_halide_metallic1500.jpg" alt="Photographic Print Silver Halide Metallic Paper" />
+          <span>PHOTOGRAPHIC PRINT<br>Silver Halide Technology<br>Metallic Paper</span>
+        </li>
+        <li>
+          <img loading="lazy" src="https://www.graphistudio.com/wp-content/uploads/2023/03/silver_halide_metallic_Lmatte1500.jpg" alt="Photographic Print Silver Halide Metallic + Matte Lamination" />
+          <span>PHOTOGRAPHIC PRINT<br>Silver Halide Technology<br>Metallic + Matte Lamination</span>
+        </li>
+        <li>
+          <img loading="lazy" src="https://www.graphistudio.com/wp-content/uploads/2023/03/silver_halide_metallic_Lglossy1500.jpg" alt="Photographic Print Silver Halide Metallic + Glossy Lamination" />
+          <span>PHOTOGRAPHIC PRINT<br>Silver Halide Technology<br>Metallic + Glossy Lamination</span>
+        </li>
+        <li>
+          <img loading="lazy" src="https://www.graphistudio.com/wp-content/uploads/2023/03/indigo_photo_lux1500.jpg" alt="Offset Print Digital Photo Lux Paper" />
+          <span>OFFSET PRINT<br>Digital Offset Technology<br>Photo Lux Paper</span>
+        </li>
+        <li>
+          <img loading="lazy" src="https://www.graphistudio.com/wp-content/uploads/2023/03/indigo_tintoretto1500.jpg" alt="Offset Print Digital Tintoretto Paper" />
+          <span>OFFSET PRINT<br>Digital Offset Technology<br>Tintoretto Paper</span>
+        </li>
+      </ul>
+    </div>
+
+    <p class="fineprint">Images courtesy of Graphistudio. Display adapts to the size of the Notion embed (1–3 columns). Dark mode supported.</p>
+  </div>
+  <!-- Lightbox markup -->
+  <div class="lightbox-backdrop" id="lb-backdrop" aria-hidden="true">
+    <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
+      <button class="lb-btn lb-close" id="lb-close" aria-label="Close">×</button>
+      <button class="lb-btn lb-prev" id="lb-prev" aria-label="Previous">‹</button>
+      <button class="lb-btn lb-next" id="lb-next" aria-label="Next">›</button>
+      <figure>
+        <img id="lb-img" alt="" />
+        <figcaption id="lb-cap"></figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const list = document.querySelectorAll('#paperprinting li');
+      const items = Array.from(list).map((li)=>{
+        const img = li.querySelector('img');
+        const cap = li.querySelector('span');
+        // Build a plain-text caption (replace <br>)
+        const capText = cap ? cap.innerHTML.replace(/<br\s*\/?\s*>/gi, ' · ') : (img?.alt || '');
+        return { el: li, src: img?.src, alt: img?.alt || '', caption: capText };
+      });
+
+      const backdrop = document.getElementById('lb-backdrop');
+      const imgEl = document.getElementById('lb-img');
+      const capEl = document.getElementById('lb-cap');
+      const btnClose = document.getElementById('lb-close');
+      const btnPrev = document.getElementById('lb-prev');
+      const btnNext = document.getElementById('lb-next');
+      let idx = -1;
+      let lastFocus = null;
+
+      function openAt(i){
+        if(i < 0 || i >= items.length) return;
+        idx = i;
+        const it = items[idx];
+        imgEl.src = it.src;
+        imgEl.alt = it.alt;
+        capEl.textContent = it.caption;
+        backdrop.classList.add('show');
+        backdrop.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+        btnClose.focus();
+      }
+      function close(){
+        backdrop.classList.remove('show');
+        backdrop.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+        if(lastFocus) lastFocus.focus();
+        idx = -1;
+      }
+      function prev(){ if(idx > -1) openAt((idx - 1 + items.length) % items.length); }
+      function next(){ if(idx > -1) openAt((idx + 1) % items.length); }
+
+      items.forEach((it, i)=>{
+        const trigger = it.el.querySelector('img');
+        if(trigger){
+          trigger.style.cursor = 'zoom-in';
+          trigger.setAttribute('role','button');
+          trigger.setAttribute('tabindex','0');
+          trigger.addEventListener('click', ()=>{ lastFocus = trigger; openAt(i); });
+          trigger.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); lastFocus = trigger; openAt(i);} });
+        }
+      });
+
+      btnClose.addEventListener('click', close);
+      btnPrev.addEventListener('click', prev);
+      btnNext.addEventListener('click', next);
+      backdrop.addEventListener('click', (e)=>{ if(e.target === backdrop) close(); });
+      window.addEventListener('keydown', (e)=>{
+        if(backdrop.classList.contains('show')){
+          if(e.key === 'Escape') close();
+          else if(e.key === 'ArrowLeft') prev();
+          else if(e.key === 'ArrowRight') next();
+        }
+      });
+    })();
+  </script>
+  <!-- Lightbox markup -->
+  <div class="lightbox-backdrop" id="lb-backdrop" aria-hidden="true">
+    <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
+      <button class="lb-btn lb-close" id="lb-close" aria-label="Close">×</button>
+      <button class="lb-btn lb-prev" id="lb-prev" aria-label="Previous">‹</button>
+      <button class="lb-btn lb-next" id="lb-next" aria-label="Next">›</button>
+      <figure>
+        <img id="lb-img" alt="" />
+        <figcaption id="lb-cap"></figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const list = document.querySelectorAll('#paperprinting li');
+      const items = Array.from(list).map((li)=>{
+        const img = li.querySelector('img');
+        const cap = li.querySelector('span');
+        // Build a plain-text caption (replace <br>)
+        const capText = cap ? cap.innerHTML.replace(/<br\s*\/?\s*>/gi, ' · ') : (img?.alt || '');
+        return { el: li, src: img?.src, alt: img?.alt || '', caption: capText };
+      });
+
+      const backdrop = document.getElementById('lb-backdrop');
+      const imgEl = document.getElementById('lb-img');
+      const capEl = document.getElementById('lb-cap');
+      const btnClose = document.getElementById('lb-close');
+      const btnPrev = document.getElementById('lb-prev');
+      const btnNext = document.getElementById('lb-next');
+      let idx = -1;
+      let lastFocus = null;
+
+      function openAt(i){
+        if(i < 0 || i >= items.length) return;
+        idx = i;
+        const it = items[idx];
+        imgEl.src = it.src;
+        imgEl.alt = it.alt;
+        capEl.textContent = it.caption;
+        backdrop.classList.add('show');
+        backdrop.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+        btnClose.focus();
+      }
+      function close(){
+        backdrop.classList.remove('show');
+        backdrop.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+        if(lastFocus) lastFocus.focus();
+        idx = -1;
+      }
+      function prev(){ if(idx > -1) openAt((idx - 1 + items.length) % items.length); }
+      function next(){ if(idx > -1) openAt((idx + 1) % items.length); }
+
+      items.forEach((it, i)=>{
+        const trigger = it.el.querySelector('img');
+        if(trigger){
+          trigger.style.cursor = 'zoom-in';
+          trigger.setAttribute('role','button');
+          trigger.setAttribute('tabindex','0');
+          trigger.addEventListener('click', ()=>{ lastFocus = trigger; openAt(i); });
+          trigger.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); lastFocus = trigger; openAt(i);} });
+        }
+      });
+
+      btnClose.addEventListener('click', close);
+      btnPrev.addEventListener('click', prev);
+      btnNext.addEventListener('click', next);
+      backdrop.addEventListener('click', (e)=>{ if(e.target === backdrop) close(); });
+      window.addEventListener('keydown', (e)=>{
+        if(backdrop.classList.contains('show')){
+          if(e.key === 'Escape') close();
+          else if(e.key === 'ArrowLeft') prev();
+          else if(e.key === 'ArrowRight') next();
+        }
+      });
+    })();
+  </script>
+  <!-- Lightbox markup -->
+  <div class="lightbox-backdrop" id="lb-backdrop" aria-hidden="true">
+    <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
+      <button class="lb-btn lb-close" id="lb-close" aria-label="Close">×</button>
+      <button class="lb-btn lb-prev" id="lb-prev" aria-label="Previous">‹</button>
+      <button class="lb-btn lb-next" id="lb-next" aria-label="Next">›</button>
+      <figure>
+        <img id="lb-img" alt="" />
+        <figcaption id="lb-cap"></figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const list = document.querySelectorAll('#paperprinting li');
+      const items = Array.from(list).map((li)=>{
+        const img = li.querySelector('img');
+        const cap = li.querySelector('span');
+        const raw = cap ? cap.innerText : (img && img.alt ? img.alt : '');
+        const capText = raw.split('\n').map(s=>s.trim()).filter(Boolean).join(' · ');
+        return { el: li, src: img ? img.src : '', alt: img ? img.alt : '', caption: capText };
+      });
+
+      const backdrop = document.getElementById('lb-backdrop');
+      const imgEl = document.getElementById('lb-img');
+      const capEl = document.getElementById('lb-cap');
+      const btnClose = document.getElementById('lb-close');
+      const btnPrev = document.getElementById('lb-prev');
+      const btnNext = document.getElementById('lb-next');
+      let idx = -1;
+      let lastFocus = null;
+
+      function openAt(i){
+        if(i < 0 || i >= items.length) return;
+        idx = i;
+        const it = items[idx];
+        imgEl.src = it.src;
+        imgEl.alt = it.alt;
+        capEl.textContent = it.caption;
+        backdrop.classList.add('show');
+        backdrop.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+        btnClose.focus();
+      }
+      function close(){
+        backdrop.classList.remove('show');
+        backdrop.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+        if(lastFocus) lastFocus.focus();
+        idx = -1;
+      }
+      function prev(){ if(idx > -1) openAt((idx - 1 + items.length) % items.length); }
+      function next(){ if(idx > -1) openAt((idx + 1) % items.length); }
+
+      items.forEach((it, i)=>{
+        const trigger = it.el.querySelector('img');
+        if(trigger){
+          trigger.style.cursor = 'zoom-in';
+          trigger.setAttribute('role','button');
+          trigger.setAttribute('tabindex','0');
+          trigger.addEventListener('click', ()=>{ lastFocus = trigger; openAt(i); });
+          trigger.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); lastFocus = trigger; openAt(i);} });
+        }
+      });
+
+      btnClose.addEventListener('click', close);
+      btnPrev.addEventListener('click', prev);
+      btnNext.addEventListener('click', next);
+      backdrop.addEventListener('click', (e)=>{ if(e.target === backdrop) close(); });
+      window.addEventListener('keydown', (e)=>{
+        if(backdrop.classList.contains('show')){
+          if(e.key === 'Escape') close();
+          else if(e.key === 'ArrowLeft') prev();
+          else if(e.key === 'ArrowRight') next();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
