@@ -17,9 +17,6 @@ Change Log
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Paper Options & Printing</title>
   <meta name="description" content="HD & photographic print paper options presented in a clean, responsive grid." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans&family=Cardo&display=swap" rel="stylesheet">
   <style>
     /* ----- CSS Reset (lightweight) ----- */
     *, *::before, *::after { box-sizing: border-box; }
@@ -28,32 +25,20 @@ Change Log
     /* ----- Page ----- */
     :root {
       --bg: #ffffff;
-      --fg: #0f172a; /* slate-900 */
-      --muted: #475569; /* slate-600 */
+      --fg: #37352f; /* Notion text color */
+      --muted: #787774; /* Notion muted text */
       --card: #ffffff;
-      --border: #e2e8f0; /* slate-200 */
-      --shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
-      --shadow-hover: 0 10px 15px rgba(15, 23, 42, 0.10), 0 4px 6px rgba(15, 23, 42, 0.05);
-      --radius: 16px;
-      --accent: #0ea5e9; /* sky-500 */
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0b0f1a;
-        --fg: #e2e8f0;
-        --muted: #94a3b8;
-        --card: #0f172a;
-        --border: #1f2937;
-        --shadow: none;
-        --shadow-hover: none;
-        --accent: #38bdf8;
-      }
+      --border: #e9e9e7; /* Notion border color */
+      --shadow: 0 1px 3px rgba(15, 15, 15, 0.1);
+      --shadow-hover: 0 4px 8px rgba(15, 15, 15, 0.15);
+      --radius: 8px;
+      --accent: #2383e2;
     }
 
     body {
-      background: var(--bg);
+      background: #ffffff;
       color: var(--fg);
-      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
       font-size: 16px;
       line-height: 1.5;
       font-weight: 400;
@@ -68,7 +53,7 @@ Change Log
     h1, h2 { 
       line-height: 1.2; 
       margin: 0 0 16px; 
-      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
       font-weight: 600;
     }
 
@@ -84,14 +69,14 @@ Change Log
     }
     header h2 { 
       letter-spacing: 0.06em; 
-      font-weight: 700; 
+      font-weight: 600; 
       font-size: clamp(18px, 3.2vw, 28px);
-      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
     }
     header .sub { 
       color: var(--muted); 
       font-size: 0.95rem; 
-      font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
     }
 
     /* Grid list styling for provided markup */
@@ -142,9 +127,9 @@ Change Log
     #paperprinting span {
       display: block;
       padding: 14px 14px 16px;
-      font-weight: 600;
+      font-weight: 500;
       letter-spacing: .02em;
-      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
     }
     #paperprinting span br { display: none; }
 
@@ -160,9 +145,9 @@ Change Log
       color: var(--muted); 
       font-size: 0.85rem; 
       margin-top: 18px; 
-      font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
     }
-      /* Lightbox (click-to-zoom) */
+    /* Lightbox (click-to-zoom) */
     .lightbox-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.75); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 24px; }
     .lightbox-backdrop.show { display: flex; }
     .lightbox { max-width: 96vw; max-height: 92vh; background: var(--card); border-radius: 14px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-hover); position: relative; }
@@ -170,56 +155,12 @@ Change Log
     .lightbox img { display: block; max-width: 96vw; max-height: 72vh; width: auto; height: auto; object-fit: contain; background: #000; }
     .lightbox figcaption { 
       padding: 12px 16px; 
-      font-weight: 600; 
+      font-weight: 500; 
       letter-spacing: .02em; 
       color: var(--fg); 
       background: var(--card); 
       border-top: 1px solid var(--border);
-      font-family: 'Poppins', Arial, Helvetica, sans-serif;
-    }
-    .lb-btn { position: absolute; top: 10px; line-height: 1; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border); background: rgba(17,24,39,.7); color: #fff; cursor: pointer; user-select: none; }
-    .lb-btn:hover { background: rgba(17,24,39,.9); }
-    .lb-close { right: 10px; font-size: 22px; }
-    .lb-prev, .lb-next { top: 50%; transform: translateY(-50%); font-size: 26px; padding: 10px 14px; background: rgba(17,24,39,.6); }
-    .lb-prev { left: 10px; }
-    .lb-next { right: 10px; }
-    @media (pointer: coarse) { .lb-prev, .lb-next { font-size: 30px; padding: 14px 18px; } }
-      /* Lightbox (click-to-zoom) */
-    .lightbox-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.75); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 24px; }
-    .lightbox-backdrop.show { display: flex; }
-    .lightbox { max-width: 96vw; max-height: 92vh; background: var(--card); border-radius: 14px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-hover); position: relative; }
-    .lightbox figure { margin: 0; }
-    .lightbox img { display: block; max-width: 96vw; max-height: 72vh; width: auto; height: auto; object-fit: contain; background: #000; }
-    .lightbox figcaption { 
-      padding: 12px 16px; 
-      font-weight: 600; 
-      letter-spacing: .02em; 
-      color: var(--fg); 
-      background: var(--card); 
-      border-top: 1px solid var(--border);
-      font-family: 'Poppins', Arial, Helvetica, sans-serif;
-    }
-    .lb-btn { position: absolute; top: 10px; line-height: 1; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border); background: rgba(17,24,39,.7); color: #fff; cursor: pointer; user-select: none; }
-    .lb-btn:hover { background: rgba(17,24,39,.9); }
-    .lb-close { right: 10px; font-size: 22px; }
-    .lb-prev, .lb-next { top: 50%; transform: translateY(-50%); font-size: 26px; padding: 10px 14px; background: rgba(17,24,39,.6); }
-    .lb-prev { left: 10px; }
-    .lb-next { right: 10px; }
-    @media (pointer: coarse) { .lb-prev, .lb-next { font-size: 30px; padding: 14px 18px; } }
-      /* Lightbox (click-to-zoom) */
-    .lightbox-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.75); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 24px; }
-    .lightbox-backdrop.show { display: flex; }
-    .lightbox { max-width: 96vw; max-height: 92vh; background: var(--card); border-radius: 14px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow-hover); position: relative; }
-    .lightbox figure { margin: 0; }
-    .lightbox img { display: block; max-width: 96vw; max-height: 72vh; width: auto; height: auto; object-fit: contain; background: #000; }
-    .lightbox figcaption { 
-      padding: 12px 16px; 
-      font-weight: 600; 
-      letter-spacing: .02em; 
-      color: var(--fg); 
-      background: var(--card); 
-      border-top: 1px solid var(--border);
-      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
     }
     .lb-btn { position: absolute; top: 10px; line-height: 1; padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border); background: rgba(17,24,39,.7); color: #fff; cursor: pointer; user-select: none; }
     .lb-btn:hover { background: rgba(17,24,39,.9); }
@@ -281,164 +222,6 @@ Change Log
 
     <p class="fineprint">Images courtesy of Graphistudio. Display adapts to the size of the Notion embed (1–3 columns). Dark mode supported.</p>
   </div>
-  <!-- Lightbox markup -->
-  <div class="lightbox-backdrop" id="lb-backdrop" aria-hidden="true">
-    <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
-      <button class="lb-btn lb-close" id="lb-close" aria-label="Close">×</button>
-      <button class="lb-btn lb-prev" id="lb-prev" aria-label="Previous">‹</button>
-      <button class="lb-btn lb-next" id="lb-next" aria-label="Next">›</button>
-      <figure>
-        <img id="lb-img" alt="" />
-        <figcaption id="lb-cap"></figcaption>
-      </figure>
-    </div>
-  </div>
-
-  <script>
-    (function(){
-      const list = document.querySelectorAll('#paperprinting li');
-      const items = Array.from(list).map((li)=>{
-        const img = li.querySelector('img');
-        const cap = li.querySelector('span');
-        // Build a plain-text caption (replace <br>)
-        const capText = cap ? cap.innerHTML.replace(/<br\s*\/?\s*>/gi, ' · ') : (img?.alt || '');
-        return { el: li, src: img?.src, alt: img?.alt || '', caption: capText };
-      });
-
-      const backdrop = document.getElementById('lb-backdrop');
-      const imgEl = document.getElementById('lb-img');
-      const capEl = document.getElementById('lb-cap');
-      const btnClose = document.getElementById('lb-close');
-      const btnPrev = document.getElementById('lb-prev');
-      const btnNext = document.getElementById('lb-next');
-      let idx = -1;
-      let lastFocus = null;
-
-      function openAt(i){
-        if(i < 0 || i >= items.length) return;
-        idx = i;
-        const it = items[idx];
-        imgEl.src = it.src;
-        imgEl.alt = it.alt;
-        capEl.textContent = it.caption;
-        backdrop.classList.add('show');
-        backdrop.setAttribute('aria-hidden','false');
-        document.body.style.overflow = 'hidden';
-        btnClose.focus();
-      }
-      function close(){
-        backdrop.classList.remove('show');
-        backdrop.setAttribute('aria-hidden','true');
-        document.body.style.overflow = '';
-        if(lastFocus) lastFocus.focus();
-        idx = -1;
-      }
-      function prev(){ if(idx > -1) openAt((idx - 1 + items.length) % items.length); }
-      function next(){ if(idx > -1) openAt((idx + 1) % items.length); }
-
-      items.forEach((it, i)=>{
-        const trigger = it.el.querySelector('img');
-        if(trigger){
-          trigger.style.cursor = 'zoom-in';
-          trigger.setAttribute('role','button');
-          trigger.setAttribute('tabindex','0');
-          trigger.addEventListener('click', ()=>{ lastFocus = trigger; openAt(i); });
-          trigger.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); lastFocus = trigger; openAt(i);} });
-        }
-      });
-
-      btnClose.addEventListener('click', close);
-      btnPrev.addEventListener('click', prev);
-      btnNext.addEventListener('click', next);
-      backdrop.addEventListener('click', (e)=>{ if(e.target === backdrop) close(); });
-      window.addEventListener('keydown', (e)=>{
-        if(backdrop.classList.contains('show')){
-          if(e.key === 'Escape') close();
-          else if(e.key === 'ArrowLeft') prev();
-          else if(e.key === 'ArrowRight') next();
-        }
-      });
-    })();
-  </script>
-  <!-- Lightbox markup -->
-  <div class="lightbox-backdrop" id="lb-backdrop" aria-hidden="true">
-    <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
-      <button class="lb-btn lb-close" id="lb-close" aria-label="Close">×</button>
-      <button class="lb-btn lb-prev" id="lb-prev" aria-label="Previous">‹</button>
-      <button class="lb-btn lb-next" id="lb-next" aria-label="Next">›</button>
-      <figure>
-        <img id="lb-img" alt="" />
-        <figcaption id="lb-cap"></figcaption>
-      </figure>
-    </div>
-  </div>
-
-  <script>
-    (function(){
-      const list = document.querySelectorAll('#paperprinting li');
-      const items = Array.from(list).map((li)=>{
-        const img = li.querySelector('img');
-        const cap = li.querySelector('span');
-        // Build a plain-text caption (replace <br>)
-        const capText = cap ? cap.innerHTML.replace(/<br\s*\/?\s*>/gi, ' · ') : (img?.alt || '');
-        return { el: li, src: img?.src, alt: img?.alt || '', caption: capText };
-      });
-
-      const backdrop = document.getElementById('lb-backdrop');
-      const imgEl = document.getElementById('lb-img');
-      const capEl = document.getElementById('lb-cap');
-      const btnClose = document.getElementById('lb-close');
-      const btnPrev = document.getElementById('lb-prev');
-      const btnNext = document.getElementById('lb-next');
-      let idx = -1;
-      let lastFocus = null;
-
-      function openAt(i){
-        if(i < 0 || i >= items.length) return;
-        idx = i;
-        const it = items[idx];
-        imgEl.src = it.src;
-        imgEl.alt = it.alt;
-        capEl.textContent = it.caption;
-        backdrop.classList.add('show');
-        backdrop.setAttribute('aria-hidden','false');
-        document.body.style.overflow = 'hidden';
-        btnClose.focus();
-      }
-      function close(){
-        backdrop.classList.remove('show');
-        backdrop.setAttribute('aria-hidden','true');
-        document.body.style.overflow = '';
-        if(lastFocus) lastFocus.focus();
-        idx = -1;
-      }
-      function prev(){ if(idx > -1) openAt((idx - 1 + items.length) % items.length); }
-      function next(){ if(idx > -1) openAt((idx + 1) % items.length); }
-
-      items.forEach((it, i)=>{
-        const trigger = it.el.querySelector('img');
-        if(trigger){
-          trigger.style.cursor = 'zoom-in';
-          trigger.setAttribute('role','button');
-          trigger.setAttribute('tabindex','0');
-          trigger.addEventListener('click', ()=>{ lastFocus = trigger; openAt(i); });
-          trigger.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); lastFocus = trigger; openAt(i);} });
-        }
-      });
-
-      btnClose.addEventListener('click', close);
-      btnPrev.addEventListener('click', prev);
-      btnNext.addEventListener('click', next);
-      backdrop.addEventListener('click', (e)=>{ if(e.target === backdrop) close(); });
-      window.addEventListener('keydown', (e)=>{
-        if(backdrop.classList.contains('show')){
-          if(e.key === 'Escape') close();
-          else if(e.key === 'ArrowLeft') prev();
-          else if(e.key === 'ArrowRight') next();
-        }
-      });
-    })();
-  </script>
   <!-- Lightbox markup -->
   <div class="lightbox-backdrop" id="lb-backdrop" aria-hidden="true">
     <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
